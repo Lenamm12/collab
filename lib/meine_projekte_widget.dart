@@ -1,178 +1,90 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
+import 'list.dart';
 
-class MeineProjekteWidget extends StatefulWidget {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ProjektList(),
+      child: const MeineProjekteWidget(),
+    ),
+  );
+}
+
+class MeineProjekteWidget extends StatelessWidget {
   const MeineProjekteWidget({Key? key}) : super(key: key);
 
   @override
-  _MeineProjekteWidgetState createState() => _MeineProjekteWidgetState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Meine Projekte',
+      theme: ThemeData(
+        brightness: Brightness.light,
+        /* light theme settings */
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        /* dark theme settings */
+      ),
+      themeMode: ThemeMode.dark,
+      home: Projekte(),
+    );
+  }
 }
 
-class _MeineProjekteWidgetState extends State<MeineProjekteWidget> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
+class Projekte extends StatefulWidget {
+  const Projekte({Key? key}) : super(key: key);
+
+  @override
+  State<Projekte> createState() => _ProjekteState();
+}
+
+class _ProjekteState extends State<Projekte> {
+  @override
+  void initState() {
+    print("async start");
+
+    Future(() {
+      var prov = Provider.of<ProjektList>(context, listen: false);
+      prov.init().then((value) {
+        print("async done");
+      });
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: scaffoldKey,
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        automaticallyImplyLeading: true,
-        title: const Text(
-          'Meine Projekte',
-        ),
-        actions: const [],
-        centerTitle: true,
-        elevation: 4,
-      ),
-      backgroundColor: const Color(0xFFF1F4F8),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          print('TODO: Funktion implementieren');
-        },
-        backgroundColor: Colors.blue,
-        elevation: 8,
-      ),
-      body: Stack(
-        children: [
-          Column(
-            mainAxisSize: MainAxisSize.max,
+    var list = context.watch<ProjektList>();
+    return ListView.builder(
+      itemCount: list.items.length,
+      itemBuilder: (context, index) {
+        var item = list.items[index];
+        return ListTile(
+          trailing: Row(
             children: [
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 108,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                ),
-                child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.95,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                              color: const Color(0xFFEEEEEE),
-                              width: 2,
-                            ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                8, 0, 8, 0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                const Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      4, 0, 4, 0),
-                                  child: Icon(
-                                    Icons.search_rounded,
-                                    color: Color(0xFF95A1AC),
-                                    size: 24,
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            4, 0, 0, 0),
-                                    child: TextFormField(
-                                      obscureText: false,
-                                      decoration: const InputDecoration(
-                                        labelText: 'Suche nach Projekten',
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+              IconButton(
+                icon: const Icon(Icons.edit),
+                onPressed: () {
+                  list.update(item.id);
+                },
               ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Image.network(
-                              '',
-                              width: 100,
-                              height: 100,
-                              fit: BoxFit.cover,
-                            ),
-                            Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: const [
-                                Text(
-                                  'Erstes Projekt',
-                                ),
-                                Text(
-                                  'Beschreibung zum ersten Projekt',
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.edit_sharp,
-                                    color: Colors.black,
-                                    size: 30,
-                                  ),
-                                  onPressed: () {
-                                    print('TODO: Funktion implementieren');
-                                  },
-                                ),
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.delete,
-                                    color: Colors.black,
-                                    size: 30,
-                                  ),
-                                  onPressed: () {
-                                    print('TODO: Funktion implementieren');
-                                  },
-                                ),
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.download_sharp,
-                                    color: Colors.black,
-                                    size: 30,
-                                  ),
-                                  onPressed: () {
-                                    print('TODO: Funktion implementieren');
-                                  },
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+              IconButton(
+                icon: const Icon(Icons.delete),
+                onPressed: () {
+                  list.delete(item.id);
+                },
               ),
             ],
           ),
-        ],
-      ),
+          title: Text(list.items[index].name),
+          subtitle: Text(list.items[index].beschreibung),
+        );
+      },
     );
   }
 }

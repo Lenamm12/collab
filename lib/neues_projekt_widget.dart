@@ -1,3 +1,6 @@
+import 'package:provider/provider.dart';
+
+import 'list.dart';
 import 'meine_projekte_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +14,16 @@ class NeuesProjektWidget extends StatefulWidget {
 class _NeuesProjektWidgetState extends State<NeuesProjektWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  var dropDownValue;
+  late String dropDownValue;
+  late TextEditingController textController1;
+  late TextEditingController textController2;
+
+  @override
+  void initState() {
+    super.initState();
+    textController1 = TextEditingController();
+    textController2 = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +64,7 @@ class _NeuesProjektWidgetState extends State<NeuesProjektWidget> {
                     child: Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
                       child: TextFormField(
+                        controller: textController1,
                         obscureText: false,
                         decoration: const InputDecoration(
                           enabledBorder: UnderlineInputBorder(
@@ -90,6 +103,7 @@ class _NeuesProjektWidgetState extends State<NeuesProjektWidget> {
                     child: Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
                       child: TextFormField(
+                        controller: textController2,
                         obscureText: false,
                         decoration: const InputDecoration(
                           enabledBorder: UnderlineInputBorder(
@@ -135,7 +149,8 @@ class _NeuesProjektWidgetState extends State<NeuesProjektWidget> {
                           child: Text(value),
                         );
                       }).toList(),
-                      onChanged: (val) => setState(() => dropDownValue = val),
+                      onChanged: (value) =>
+                          setState(() => dropDownValue = value!),
                       elevation: 2,
                     ),
                   ),
@@ -147,16 +162,20 @@ class _NeuesProjektWidgetState extends State<NeuesProjektWidget> {
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
                     child: ElevatedButton(
-                      onPressed: () async {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const MeineProjekteWidget(),
-                          ),
-                        );
-                      },
-                      child: (const Text('Hinzufügen')),
-                    ),
+                        onPressed: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const MeineProjekteWidget(),
+                            ),
+                          );
+                        },
+                        onSubmitted: (String name, String beschreibung,
+                            String dropDownValue) async {
+                          Provider.of<ProjektList>(context, listen: false)
+                              .create(name, beschreibung, dropDownValue);
+                        },
+                        child: (const Text('Hinzufügen'))),
                   ),
                 ],
               ),
