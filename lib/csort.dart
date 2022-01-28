@@ -20,7 +20,7 @@ class _CSortWidgetState extends State<CSortWidget> {
         backgroundColor: Colors.blue,
         automaticallyImplyLeading: true,
         title: const Text(
-          'C-Sort',
+          'CSort',
         ),
         actions: [],
         centerTitle: true,
@@ -39,7 +39,7 @@ class _CSortWidgetState extends State<CSortWidget> {
                     child: Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 4),
                       child: Text(
-                        'Beschreibung und Hilfestellungen ....',
+                        'Mit diesem kollaborativen Sticky Note-Tool kann man beispielsweise beim Brainstorming Ideen sammeln. Alle neuen Karten landen auf einem "Ungeordnet"-Stapel, diese kann man in die Mitte drag & droppen. Die zugewiesenen Farben der Sticky Notes können auch mit selbst aufgeschriebenen Attributen angelegt werden, welche dann übersichtlich unten in der "Legende" stehen. ',
                         textAlign: TextAlign.start,
                         style: GoogleFonts.getFont(
                           'Lexend Deca',
@@ -51,8 +51,7 @@ class _CSortWidgetState extends State<CSortWidget> {
                 ],
               ),
             ),
-            Image.network(
-              '',
+            Image(image: const AssetImage('images/csort_light.png'),
               width: MediaQuery.of(context).size.width * 0.9,
               fit: BoxFit.cover,
             ),

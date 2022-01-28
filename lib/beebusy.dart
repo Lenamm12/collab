@@ -41,7 +41,7 @@ class _BeeBusyWidgetState extends State<BeeBusyWidget> {
                     child: Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 4),
                       child: Text(
-                        'Beschreibung und Hilfestellungen ....',
+                        'Tool zum operativen Projektmanagement à la Jira oder Wekan. Alles in einem Docker Image für leichtes Deployment in der Cloud oder lokal. Man kann sowohl User als auch Projekte erstellen, löschen, bearbeiten und archivieren. Es können Tasks, Übersichts-Listen wie "TODO, IN PROGRESS, REVIEW, DONE" angelegt werden. Drag & Drop erlaubt einfache Bedienung zwischen den Baords.',
                         textAlign: TextAlign.start,
                         style: GoogleFonts.getFont(
                           'Lexend Deca',
@@ -53,8 +53,7 @@ class _BeeBusyWidgetState extends State<BeeBusyWidget> {
                 ],
               ),
             ),
-            Image.network(
-              '',
+            Image(image: AssetImage('images/beeBusy_board.png'),
               width: MediaQuery.of(context).size.width * 0.9,
               fit: BoxFit.cover,
             ),

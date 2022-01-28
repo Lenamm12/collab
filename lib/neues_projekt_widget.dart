@@ -14,7 +14,9 @@ class NeuesProjektWidget extends StatefulWidget {
 class _NeuesProjektWidgetState extends State<NeuesProjektWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  late String dropDownValue;
+  late String dropDownValue = "Whitebird";
+  late String name = "";
+  late String beschreibung = "";
   late TextEditingController textController1;
   late TextEditingController textController2;
 
@@ -31,17 +33,7 @@ class _NeuesProjektWidgetState extends State<NeuesProjektWidget> {
       key: scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        automaticallyImplyLeading: false,
-        leading: InkWell(
-          onTap: () async {
-            Navigator.pop(context);
-          },
-          child: const Icon(
-            Icons.arrow_back_rounded,
-            color: Color(0xFF82878C),
-            size: 24,
-          ),
-        ),
+        automaticallyImplyLeading: true,
         title: const Text('Neues Projekt hinzufügen'),
         actions: [],
         centerTitle: true,
@@ -142,8 +134,13 @@ class _NeuesProjektWidgetState extends State<NeuesProjektWidget> {
                     padding: const EdgeInsetsDirectional.fromSTEB(50, 0, 0, 0),
                     child: DropdownButton<String>(
                       value: dropDownValue,
-                      items: <String>['6-3-5', 'ConForm', 'Whitebird', 'C-Sort']
-                          .map<DropdownMenuItem<String>>((String value) {
+                      items: <String>[
+                        '6-3-5 Methode',
+                        'ConForm',
+                        'Whitebird',
+                        'CSort',
+                        'BeeBusy'
+                      ].map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
@@ -163,17 +160,14 @@ class _NeuesProjektWidgetState extends State<NeuesProjektWidget> {
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
                     child: ElevatedButton(
                         onPressed: () async {
+                          Provider.of<ProjektList>(context, listen: false)
+                              .create(name, beschreibung, dropDownValue);
                           await Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => const MeineProjekteWidget(),
                             ),
                           );
-                        },
-                        onSubmitted: (String name, String beschreibung,
-                            String dropDownValue) async {
-                          Provider.of<ProjektList>(context, listen: false)
-                              .create(name, beschreibung, dropDownValue);
                         },
                         child: (const Text('Hinzufügen'))),
                   ),

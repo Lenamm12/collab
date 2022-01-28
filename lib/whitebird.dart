@@ -39,7 +39,7 @@ class _WhitebirdWidgetState extends State<WhitebirdWidget> {
                     child: Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 4),
                       child: Text(
-                        'Beschreibung und Hilfestellungen ....',
+                        'Whitebird ist ein open-source, web-basiertes, collaboratives und digitales Whiteboard. Man kann Whiteboard-Rooms kreieren, diese via Codes oder Links beitreten, zusammen ein Whiteboard bearbeiten, diese als .png/.pdf exportieren und Sticky Notes dazufügen. Es werden die typischen Whiteboard-Tools wie Farben und Stifte genutzt und man kann Textfelder oder geometrische Objekte wie Kreise oder Vierecke anlegen. Jedes dieser Objekte kann auch gelöscht, verschoben, rotiert oder skaliert werden.',
                         textAlign: TextAlign.start,
                         style: GoogleFonts.getFont(
                           'Lexend Deca',
@@ -51,8 +51,7 @@ class _WhitebirdWidgetState extends State<WhitebirdWidget> {
                 ],
               ),
             ),
-            Image.network(
-              '',
+            Image(image: const AssetImage('images/whitebird.png'),
               width: MediaQuery.of(context).size.width * 0.9,
               fit: BoxFit.cover,
             ),

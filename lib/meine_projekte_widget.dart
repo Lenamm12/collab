@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'list.dart';
+import 'neues_projekt_widget.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +31,7 @@ class MeineProjekteWidget extends StatelessWidget {
         /* dark theme settings */
       ),
       themeMode: ThemeMode.dark,
-      home: Projekte(),
+      home: const Projekte(),
     );
   }
 }
@@ -60,31 +61,48 @@ class _ProjekteState extends State<Projekte> {
   @override
   Widget build(BuildContext context) {
     var list = context.watch<ProjektList>();
-    return ListView.builder(
-      itemCount: list.items.length,
-      itemBuilder: (context, index) {
-        var item = list.items[index];
-        return ListTile(
-          trailing: Row(
-            children: [
+    return Scaffold (
+      body:Column(
+        children: [
+          ElevatedButton(
+                  onPressed: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => NeuesProjektWidget(),
+                      ),
+                    );
+                  },
+                  child: const Text('Neues Projekt starten'),
+                ),
+          ListView.builder(
+          itemCount: list.items.length,
+          itemBuilder: (context, index) {
+              var item = list.items[index];
+              return ListTile(
+              trailing: Row(
+              children: [
               IconButton(
-                icon: const Icon(Icons.edit),
-                onPressed: () {
-                  list.update(item.id);
-                },
+              icon: const Icon(Icons.edit),
+              onPressed: () {
+              list.update(item.id);
+              },
               ),
               IconButton(
-                icon: const Icon(Icons.delete),
-                onPressed: () {
-                  list.delete(item.id);
-                },
+              icon: const Icon(Icons.delete),
+              onPressed: () {
+              list.delete(item.id);
+              },
               ),
-            ],
-          ),
-          title: Text(list.items[index].name),
-          subtitle: Text(list.items[index].beschreibung),
-        );
-      },
+              ],
+              ),
+              title: Text(list.items[index].name),
+              subtitle: Text(list.items[index].beschreibung),
+              );
+              })])
     );
   }
 }
+
+           
+      

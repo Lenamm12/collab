@@ -1,10 +1,29 @@
+import 'package:provider/provider.dart';
+
 import 'beebusy.dart';
 import 'csort.dart';
 import 'collab.dart';
 import 'conform.dart';
+import 'meine_projekte_widget.dart';
 import 'neues_projekt_widget.dart';
 import 'whitebird.dart';
 import 'package:flutter/material.dart';
+
+void main() async {
+
+  runApp(MyApp());
+
+}
+
+class MyApp extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: StartseiteWidget(),
+    );
+  }
+}
 
 class StartseiteWidget extends StatefulWidget {
   const StartseiteWidget({Key? key}) : super(key: key);
@@ -14,15 +33,26 @@ class StartseiteWidget extends StatefulWidget {
 }
 
 class _StartseiteWidgetState extends State<StartseiteWidget> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.blue,
         automaticallyImplyLeading: false,
+        leading: Padding( padding: const EdgeInsets.only(left: 3.0, top: 5.0),
+        child: GestureDetector(
+          onTap: () async {
+            await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                const MeineProjekteWidget(),
+              ),
+            );
+          }, child: const Text('Meine Projekte'),
+        ),
+    ),
         title: const Text(
           'ColLab Tools',
         ),
@@ -209,7 +239,7 @@ class _StartseiteWidgetState extends State<StartseiteWidget> {
                       child: Align(
                         alignment: AlignmentDirectional(0, -0.05),
                         child: Text(
-                          'C-Sort',
+                          'CSort',
                           textAlign: TextAlign.center,
                         ),
                       ),

@@ -39,7 +39,7 @@ class _ConFormWidgetState extends State<ConFormWidget> {
                     child: Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 4),
                       child: Text(
-                        'Beschreibung und Hilfestellungen ....',
+                        'conForm ist eine Web Applikation um Konzeptpapiere kollaborativ zu erstellen. Man kann Projekte erstellen, bearbeiten und mehrere speichern. Erst muss ein Account kreiert und eingeloggt werden um alle Funktionen benutzen zu können. Wenn ein Projekt angelegt ist, kann man sein Team durch Codes einladen. Jedes Team-Mitglied kann Veränderungen vornehmen und speichern. Dazu wurde ein Kanban board dazu implementiert um den Arbeitsfluss zu verbessern. Damit kann der Nutzer seine Tasks in mehrere kleinere tasks zerteilen um Fortschritt besser zu beobachten.',
                         textAlign: TextAlign.start,
                         style: GoogleFonts.getFont(
                           'Lexend Deca',
@@ -51,8 +51,7 @@ class _ConFormWidgetState extends State<ConFormWidget> {
                 ],
               ),
             ),
-            Image.network(
-              '',
+            Image(image: const AssetImage('images/conForm_start.png'),
               width: MediaQuery.of(context).size.width * 0.9,
               fit: BoxFit.cover,
             ),
